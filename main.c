@@ -71,6 +71,7 @@ int replace(char *para, int N, Pair *pairs, int M, int L)
   {
     /* Extract word */
     int wordLen = 0;
+    // printf("Begin word extraction\n");
     while (index + wordLen < N && wordLen <= L &&
            result[index + wordLen] != ' ')
     {
@@ -78,6 +79,8 @@ int replace(char *para, int N, Pair *pairs, int M, int L)
       wordLen++;
     }
     word[wordLen] = '\0';
+    // printf("Completed word extraction succesffully\n");
+    // printf("Extracted word %s\n", word);
 
     /* Check if this word needs to be replaced */
     for (i = 0; i < M; i++)
@@ -88,13 +91,19 @@ int replace(char *para, int N, Pair *pairs, int M, int L)
         for (j = 0; j < strlen(pairs[i].to); j++)
         {
           result[index + j] = pairs[i].to[j];
-          printf("Replaced %s with %s\n", pairs[i].from, pairs[i].to);
+          // printf("Replaced %s with %s\n", pairs[i].from, pairs[i].to);
         }
         index += strlen(pairs[i].to);
         break;
       }
+      else
+      {
+        printf("This was horrible example paragraph to test with!\n");
+        return 0;
+      }
     }
 
+    /* Move index to the next word, if it equals number of word pairs.*/
     if (i == M)
     {
       index += wordLen;
@@ -124,28 +133,29 @@ int main()
    *     - Frees allocated memory for pairs
    */
 
-  int T;
+  int T, exitStatus = 0;
   scanf("%d", &T);
-  printf("%d\n", T);
 
   while (T--)
   {
-    int L, M, N;
-    scanf("%d %d %d", &L, &M, &N);
+  }
+  int L, M, N;
+  scanf("%d %d %d", &L, &M, &N);
 
-    Pair *pairs = malloc(M * sizeof(Pair));
-    for (int i = 0; i < M; i++)
-    {
-      scanf("%s %s", pairs[i].from, pairs[i].to);
-    }
-
-    char para[MAX_LEN + 1];
-    scanf(" %[^\n]s", para);
-
-    replace(para, N, pairs, M, L);
-
-    free(pairs);
+  Pair *pairs = malloc(M * sizeof(Pair));
+  for (int i = 0; i < M; i++)
+  {
+    scanf("%s %s", pairs[i].from, pairs[i].to);
   }
 
-  return 0;
+  /*The paragraph input to be modified*/
+  char para[MAX_LEN + 1];
+  scanf(" %[^\n]s", para);
+
+  replace(para, N, pairs, M, L);
+
+  free(pairs);
+
+  printf("Exiting with Status: %d\n", exitStatus);
+  return (exitStatus);
 }
