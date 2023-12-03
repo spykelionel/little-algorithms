@@ -134,28 +134,28 @@ int main()
    */
 
   int T, exitStatus = 0;
+  /* This progam will run T times.*/
   scanf("%d", &T);
 
   while (T--)
   {
+    int L, M, N;
+    scanf("%d %d %d", &L, &M, &N);
+
+    Pair *pairs = malloc(M * sizeof(Pair));
+    for (int i = 0; i < M; i++)
+    {
+      scanf("%s %s", pairs[i].from, pairs[i].to);
+    }
+
+    /*The paragraph input to be modified*/
+    char para[MAX_LEN + 1];
+    scanf(" %[^\n]s", para);
+
+    replace(para, N, pairs, M, L);
+
+    free(pairs);
   }
-  int L, M, N;
-  scanf("%d %d %d", &L, &M, &N);
-
-  Pair *pairs = malloc(M * sizeof(Pair));
-  for (int i = 0; i < M; i++)
-  {
-    scanf("%s %s", pairs[i].from, pairs[i].to);
-  }
-
-  /*The paragraph input to be modified*/
-  char para[MAX_LEN + 1];
-  scanf(" %[^\n]s", para);
-
-  replace(para, N, pairs, M, L);
-
-  free(pairs);
-
   printf("Exiting with Status: %d\n", exitStatus);
   return (exitStatus);
 }
